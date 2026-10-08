@@ -1,0 +1,217 @@
+{
+ "_doc": "Brand / chain detection: [brand name, regex tested against the facility name]. First match wins, so list specific names before generic ones.",
+ "brands": [
+  [
+   "Al Mokhtabar",
+   "^al ?mokhtabar"
+  ],
+  [
+   "Alfa Lab",
+   "^alfa lab"
+  ],
+  [
+   "Alfa Scan",
+   "^alfa scan"
+  ],
+  [
+   "Al Borg Scan",
+   "^al ?borg scan"
+  ],
+  [
+   "Al Borg Lab",
+   "^al ?borg"
+  ],
+  [
+   "Royal Laboratory",
+   "^royal lab"
+  ],
+  [
+   "Seif Pharmacy",
+   "^seif pharm"
+  ],
+  [
+   "Tabarak Hospital",
+   "^tabarak"
+  ],
+  [
+   "Ansary Laboratories",
+   "^ansary"
+  ],
+  [
+   "Delmar & Attalla",
+   "^delmar"
+  ],
+  [
+   "Abo Ali Pharmacy",
+   "^abo ali"
+  ],
+  [
+   "Cairo Lab",
+   "^cairo lab"
+  ],
+  [
+   "Cairo Scan",
+   "^cairo scan"
+  ],
+  [
+   "Doss Pharmacy",
+   "^doss"
+  ],
+  [
+   "Grand Clinical Lab",
+   "^grand clinical"
+  ],
+  [
+   "City Clinic",
+   "^city clinic"
+  ],
+  [
+   "Dawi Clinic",
+   "^dawi"
+  ],
+  [
+   "Magrabi",
+   "^magrabi"
+  ],
+  [
+   "Blue Eyes",
+   "^blue eyes"
+  ],
+  [
+   "Town Lab",
+   "^town lab"
+  ],
+  [
+   "Happy Vision",
+   "^happy vision"
+  ],
+  [
+   "Zikry Pharmacy",
+   "^zikry"
+  ],
+  [
+   "Baraka Optics",
+   "^baraka"
+  ],
+  [
+   "Eye Fashion",
+   "^eye fashion"
+  ],
+  [
+   "El Serafy",
+   "^el serafy"
+  ],
+  [
+   "Lotus Pharmacies",
+   "^lotus pharm"
+  ],
+  [
+   "El Toukhy",
+   "^el toukhy"
+  ],
+  [
+   "Physio Cure",
+   "^physio ?cure"
+  ],
+  [
+   "Physiocare",
+   "^physiocare"
+  ],
+  [
+   "Nile Scan",
+   "^nile scan"
+  ],
+  [
+   "Behman",
+   "^behman"
+  ],
+  [
+   "Bloom Pharmacy",
+   "^bloom"
+  ],
+  [
+   "Shiny White",
+   "^shiny white"
+  ],
+  [
+   "AO Optics",
+   "^ao optics"
+  ],
+  [
+   "Abdel Maksoud",
+   "^abdel maksoud"
+  ],
+  [
+   "Neuro Med",
+   "^neuro ?med"
+  ],
+  [
+   "Speed",
+   "^speed "
+  ],
+  [
+   "El Tayebi Pharmacy",
+   "^el tayebi"
+  ],
+  [
+   "MRC Lab",
+   "^mrc"
+  ],
+  [
+   "Misr Radiology",
+   "^misr radiology"
+  ],
+  [
+   "Cairo Kidney Center",
+   "^cairo kidney"
+  ],
+  [
+   "Dental Care",
+   "^dental care"
+  ],
+  [
+   "ENT Clinic",
+   "^ent clinic"
+  ],
+  [
+   "El Araby",
+   "^el araby"
+  ],
+  [
+   "Clinique du Nil",
+   "^clinique du"
+  ],
+  [
+   "Acculab",
+   "^acculab"
+  ],
+  [
+   "El Tarshouby",
+   "^el tarshouby"
+  ],
+  [
+   "Prime",
+   "^prime "
+  ],
+  [
+   "Oasis Clinics",
+   "^oasis"
+  ],
+  [
+   "Cleopatra",
+   "^cleopatra"
+  ],
+  [
+   "Egy Heart",
+   "^egy heart"
+  ],
+  [
+   "Golden Arch",
+   "^golden arch"
+  ],
+  [
+   "AlZoghbi Pharmacy",
+   "^al ?zoghbi"
+  ]
+ ]
+}

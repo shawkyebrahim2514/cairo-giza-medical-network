@@ -1,0 +1,86 @@
+# Builds the site, runs the browser tests, publishes to GitHub Pages and attaches
+# the single offline HTML file to a GitHub Release named after the data snapshot.
+name: Build & deploy
+
+on:
+  push:
+    branches: [main]
+    paths: [src/**, data/**, config/**, scripts/**, vendor/**, tests/**, .github/workflows/deploy.yml]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      snapshot: ${{ steps.meta.outputs.snapshot }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Build
+        run: python scripts/build.py
+
+      - name: Test (UI + PDF)
+        run: |
+          pip install -r requirements-dev.txt
+          python -m playwright install --with-deps chromium
+          python tests/ui_test.py
+          python tests/pdf_test.py
+
+      - id: meta
+        run: echo "snapshot=$(python -c "import json;print(json.load(open('data/meta.json'))['snapshot'])")" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: single-file
+          path: dist/cairo-giza-medical-network.html
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - id: pages
+        uses: actions/deploy-pages@v4
+
+  release:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: single-file
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: data-${{ needs.build.outputs.snapshot }}
+          name: Data snapshot ${{ needs.build.outputs.snapshot }}
+          body: |
+            Offline single-file directory (data snapshot ${{ needs.build.outputs.snapshot }}).
+            Download **cairo-giza-medical-network.html** and open it in any browser – no internet or install needed.
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for what changed.
+          files: cairo-giza-medical-network.html
+          make_latest: true

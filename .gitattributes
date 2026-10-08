@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.png binary
+vendor/*.js -diff linguist-vendored
+data/facilities.json linguist-generated

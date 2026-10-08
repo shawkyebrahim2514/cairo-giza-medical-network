@@ -1,0 +1,39 @@
+{
+ "_doc": "Governorate normalisation and site definitions. 'governorate_aliases' maps the raw 'City' values from the source to a canonical governorate (keys are compared case-insensitively after trimming). A value like 'Dakahlia - Mansoura' that is not listed is split on ' - ': the left part is the governorate and the right part becomes the area. 'sites' define what each build contains; build with: python scripts/build.py --site <name>.",
+ "country": "EG",
+ "governorate_aliases": {
+  "cairoq": "Cairo",
+  "helwan": "Cairo",
+  "al beheira": "Beheira",
+  "el beheira": "Beheira",
+  "al fayoum": "Fayoum",
+  "al menoufeya": "Menoufia",
+  "menofia": "Menoufia",
+  "monufia": "Menoufia",
+  "al qalyubia": "Qalyubia",
+  "qalubiya": "Qalyubia",
+  "ash sharqia": "Sharqia",
+  "damietta new": "Damietta",
+  "el wadi el gedeed": "New Valley",
+  "hurghada": "Red Sea",
+  "ismalia": "Ismailia",
+  "kafr el-sheikh": "Kafr El Sheikh",
+  "marsa matrouh": "Matrouh",
+  "menia": "Minya",
+  "port fouad": "Port Said",
+  "sharm el sheikh": "South Sinai"
+ },
+ "sites": {
+  "cairo-giza": {
+   "title": "Cairo & Giza",
+   "slug": "cairo-giza",
+   "governorates": ["Cairo", "Giza"]
+  },
+  "egypt": {
+   "title": "Egypt",
+   "slug": "egypt",
+   "governorates": "all"
+  }
+ },
+ "default_site": "cairo-giza"
+}

@@ -1,0 +1,41 @@
+{
+ "_doc": "Facility types in display order. Keys are slugs of the source 'ProviderType' (lower-case, spaces -> dashes).",
+ "types": {
+  "hospital": {
+   "label": "Hospital",
+   "plural": "Hospitals"
+  },
+  "clinic": {
+   "label": "Clinic",
+   "plural": "Clinics"
+  },
+  "laboratory": {
+   "label": "Laboratory",
+   "plural": "Laboratories"
+  },
+  "pharmacy": {
+   "label": "Pharmacy",
+   "plural": "Pharmacies"
+  },
+  "radiology-centre": {
+   "label": "Radiology Centre",
+   "plural": "Radiology"
+  },
+  "optical": {
+   "label": "Optical",
+   "plural": "Opticals"
+  },
+  "dental": {
+   "label": "Dental",
+   "plural": "Dental"
+  },
+  "physical-therapy-centre": {
+   "label": "Physical Therapy",
+   "plural": "Physiotherapy"
+  },
+  "diagnostic-centre": {
+   "label": "Diagnostic Centre",
+   "plural": "Diagnostic"
+  }
+ }
+}

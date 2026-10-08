@@ -1,0 +1,45 @@
+# Weekly: fetch the live facility list, and if anything changed open (or update)
+# a pull request with the change report. Merging it rebuilds and redeploys the site.
+name: Check for data updates
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch & compare
+        id: update
+        run: |
+          set +e
+          python scripts/update.py --no-build --report "$RUNNER_TEMP/report.md"
+          code=$?
+          set -e
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" = "1" ]; then
+            echo "::error::Could not fetch the facility list (blocked or format changed). Run 'python scripts/update.py' locally, or use --html with a saved page."
+            exit 1
+          fi
+
+      - name: Open pull request
+        if: steps.update.outputs.code == '0'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: data-update
+          delete-branch: true
+          commit-message: "Data update ${{ steps.update.outputs.date }}: ${{ steps.update.outputs.summary }}"
+          title: "Data update ${{ steps.update.outputs.date }}: ${{ steps.update.outputs.summary }}"
+          body-path: ${{ runner.temp }}/report.md
+          labels: data-update

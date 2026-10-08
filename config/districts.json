@@ -1,0 +1,420 @@
+{
+ "_doc": "District detection rules. Each rule group applies to facilities whose governorate is listed. 'strong' rules (explicit area names) are tried on the address then the name; 'weak' rules (streets, landmarks) only on the address and only if no strong rule matched. The LAST match in the text wins. A rule's third value limits it to facilities listed under that governorate (null = any). 'district_gov' maps each district to its real governorate (fixes facilities filed under the wrong one). 'aliases' are extra search words for a district.",
+ "groups": [
+  {
+   "governorates": [
+    "Cairo",
+    "Giza"
+   ],
+   "strong": [
+    [
+     "zahraa? el[ -]?maadi|zahraa maadi",
+     "Zahraa El Maadi",
+     null
+    ],
+    [
+     "maadi|merag city|saqr quraish|sayed zakaria",
+     "Maadi",
+     null
+    ],
+    [
+     "new cairo|fifth sett?e?l?e?ment|settelment|5th settlement|first settlement|1st settlement|third settlement|tagamo|katameya|kattameya|mivida|90th? street|north 90|ninety street|district 5 mall|american university|all seasons park|\\bauc\\b|investors area|spot mall|golden square|point 90|waterway|5a mall|east hub|craft zone|fifth avenue",
+     "New Cairo",
+     null
+    ],
+    [
+     "\\brehab\\b",
+     "Rehab City",
+     null
+    ],
+    [
+     "madinaty|madinty",
+     "Madinaty",
+     null
+    ],
+    [
+     "shorouk|sherouk",
+     "El Shorouk",
+     null
+    ],
+    [
+     "badr city|russian university|\\bbadr\\b(?! el din| eddin)",
+     "Badr City",
+     null
+    ],
+    [
+     "obour",
+     "El Obour",
+     null
+    ],
+    [
+     "future city|mostakbal",
+     "Future City",
+     null
+    ],
+    [
+     "10th of ramadan|tenth of ramadan",
+     "10th of Ramadan",
+     null
+    ],
+    [
+     "new capital|administrative capital|\\br7\\b",
+     "New Administrative Capital",
+     null
+    ],
+    [
+     "helio\\w*|masr el[ -]?gedida|masr elgdeeda|misr el[ -]?gedida|korba|roxy",
+     "Heliopolis",
+     null
+    ],
+    [
+     "no[sz]ha|\\bal noza\\b|al maza|ard al golf|ard el golf|golf area|almaza|almazah",
+     "El Nozha & Sheraton",
+     null
+    ],
+    [
+     "nasr city|madinet nasr|city stars",
+     "Nasr City",
+     null
+    ],
+    [
+     "gesr el[ -]?su?w?e?[iy]?[sz]s?|gesr al suez|alf maskan|suez bridge|farouq[iy]+a|mar[ey]+land",
+     "Gesr El Suez & Alf Maskan",
+     null
+    ],
+    [
+     "mokh?att?am|mokatem|moqtam|moqattam|middle plateau|hadaba",
+     "Mokattam",
+     null
+    ],
+    [
+     "helwan|15 may city|maasara|tebbin",
+     "Helwan",
+     null
+    ],
+    [
+     "ain shams|ein shams",
+     "Ain Shams",
+     null
+    ],
+    [
+     "matareya|mataria|matariya",
+     "El Matareya",
+     null
+    ],
+    [
+     "\\bmarg\\b|merg\\b|ezbet el nakhl|zakat|zakah|zakaa",
+     "El Marg",
+     null
+    ],
+    [
+     "salam city|madinet el salam|salam first|salam 1st|peace city|\\(el salam\\)",
+     "El Salam City",
+     null
+    ],
+    [
+     "shou?bra el[ -]?kh[ae]i?ma|shubra al[ -]?khaimah|shoubra elkhema|mostorod|musturod|bahtim",
+     "Shubra El Kheima",
+     null
+    ],
+    [
+     "sh[ou]u?bra|rod el farag|rawd? el[ -]?farag|rawd al[ -]?faraj|khalafaw",
+     "Shoubra",
+     null
+    ],
+    [
+     "zeitoun|zaytoun|zaitoun|zayton|zatoun|helm[iy]+a square|helmeya",
+     "El Zeitoun",
+     null
+    ],
+    [
+     "hadayek? (?:al |el )?kobba|hadaeq al qubbah|hadayk elqoba|kobba|qubba|qobba|quba\\b|weili|waili|daher|zaher|abbasi+y?a|abbassia|sakakini|\\bsawah\\b|swaah|khalifa el[ -]?maa?moun|khalifa al[ -]?maa?moun|caliph|bakr[yi]",
+     "Hadayek El Kobba & Abbasiya",
+     null
+    ],
+    [
+     "down ?town(?! mall| center)|abdeen|abdin|ramses|kasr el nile|qasr el nil|talaat harb|ataba|bab el louk|tharwat",
+     "Downtown & Abdeen",
+     "Cairo"
+    ],
+    [
+     "garden city|kasr al ainy|kasr el ainy|kasr el aini|qasr al[ -]+aini|qasr el aini",
+     "Garden City & Kasr El Ainy",
+     null
+    ],
+    [
+     "sayeda zeinab|sayed zeinab|sayyida zeinab|el khalifa|gamal?[iy]+a\\b|al -gamalia|darasa|bab el sharia|bab al[ -]+sharia|bab el khalq|port said street|majlis al ummah|azhar",
+     "Sayeda Zeinab & Islamic Cairo",
+     "Cairo"
+    ],
+    [
+     "old cairo|mal[ie]k el saleh|malik al[ -]saleh|misr el[ -]?k?q?adima|masr el adima|fustat|manial|el roda",
+     "Old Cairo & Manial",
+     null
+    ],
+    [
+     "dar el[ -]?salam|dar al salam|basateen|basatin",
+     "Dar El Salam & Basateen",
+     null
+    ],
+    [
+     "zamalek",
+     "Zamalek",
+     null
+    ],
+    [
+     "bulaq|boulaq|boulak",
+     "Bulaq Abu El Ela",
+     "Cairo"
+    ],
+    [
+     "dakrour|dakrur|bulaq|boulaq|boulak|saft el laban",
+     "Bulaq El Dakrour",
+     "Giza"
+    ],
+    [
+     "mohe?a?nd[ei]?s+[ei]+n|mohandseen|mohandesen|shehab|soliman abaza",
+     "Mohandessin",
+     null
+    ],
+    [
+     "ard[ -]?(?:el|al)[ -]?l[ew]*aa?\\b|ard el lewa|ard ellwaa",
+     "Ard El Lewa",
+     null
+    ],
+    [
+     "dokki|doqqi|mossadeq|mosaddak",
+     "Dokki",
+     null
+    ],
+    [
+     "agou?zah?|kit ?kat",
+     "Agouza",
+     null
+    ],
+    [
+     "imbaba|embaba|wahdah|warr?aq|warak|bashtil|bashteel",
+     "Imbaba & El Warraq",
+     null
+    ],
+    [
+     "fa[iy]sal|feisal",
+     "Faisal",
+     null
+    ],
+    [
+     "alahram|ahram gardens|hadayek? (?:al |el )?ahram|hadaeq al ahram|khufu gate|ghufu gate|kh?ufu",
+     "Hadayek El Ahram",
+     null
+    ],
+    [
+     "\\bharam\\b|pyramids|mariout[ey]+a|tersa|lebeny|libini|ebeny",
+     "Haram & Pyramids",
+     null
+    ],
+    [
+     "omraniya|omrania",
+     "El Omraniya",
+     null
+    ],
+    [
+     "moneeb|monib",
+     "El Moneeb",
+     null
+    ],
+    [
+     "new giza",
+     "New Giza",
+     null
+    ],
+    [
+     "zayed|beverly hills|arkan|khamayel|diar el taamer|el taamer|sodic|zoul mall",
+     "Sheikh Zayed",
+     null
+    ],
+    [
+     "smart village|mogawra|(?<!6 )october(?! 6 street)|6th of oct|motam[ae]?y[iy]?[sz]|hosary|hossary|mall of arabia|mall of egypt|firdous|ferdous|golf residence|mehwar|central axis|opera city|opra city",
+     "6th of October",
+     null
+    ],
+    [
+     "kerdasa|kirdasa|oseem|osim",
+     "Kerdasa & Osim",
+     null
+    ],
+    [
+     "ayyat|ayaat|badrashe?e?i?n|badrshein|el[ -]saf\\b|hawamd[iy]+a",
+     "South Giza (Ayyat, Badrashein, Hawamdiya)",
+     null
+    ],
+    [
+     "mo?u?rad street|bahr (?:el|al) a[a]?zam|great sea|giza square|rabi el geezy|rabih al",
+     "Giza Central",
+     null
+    ]
+   ],
+   "weak": [
+    [
+     "hegaz|hijaz|othman ibn affan|uthman bin affan|military college|ismailia square|ismailya|imam aly|cleopatra|salah el din|merghany|mirghani|baron|amun tower|mithaq",
+     "Heliopolis",
+     "Cairo"
+    ],
+    [
+     "sheraton",
+     "El Nozha & Sheraton",
+     "Cairo"
+    ],
+    [
+     "15 may street",
+     "Shubra El Kheima",
+     "Cairo"
+    ],
+    [
+     "makram ebeid|abbas el akkad|abbas al aq?k?ad|hassan (?:el|al) mamoun|tayaran|aviation extension|zaker hussein|mostafa el nahas|tiba mall|abbas al[ -]+a[qk]+a?d|hassan al[ -]mamoun|teraa el gabal|joseph tito|7th district|seventh district|sixth district|10th district|tenth district|panorama mall",
+     "Nasr City",
+     "Cairo"
+    ],
+    [
+     "gamal abdel nasser|alexandria square",
+     "El Salam City",
+     "Cairo"
+    ],
+    [
+     "autostrad|degla|corniche el nil|korniche el nile|mostafa kamel axis|qabbani",
+     "Maadi",
+     "Cairo"
+    ],
+    [
+     "selim el ?awal|kasr el diyafa",
+     "El Zeitoun",
+     "Cairo"
+    ],
+    [
+     "mansoura street",
+     "Sayeda Zeinab & Islamic Cairo",
+     "Cairo"
+    ],
+    [
+     "fayoum street",
+     "Dar El Salam & Basateen",
+     "Cairo"
+    ],
+    [
+     "ismailia desert road|km 4[23]",
+     "El Shorouk",
+     "Cairo"
+    ],
+    [
+     "corner mall|gate 6",
+     "Rehab City",
+     "Cairo"
+    ],
+    [
+     "tahrir|nabot|messaha|mesaha",
+     "Dokki",
+     "Giza"
+    ],
+    [
+     "ahmed oraby|ahmed orabi|sudan street|batal ahmed|lebanon street|abdel moneim riad|gameat el dowal|gamet eldewal|sphinx square|mohy eldeen|hegaz",
+     "Mohandessin",
+     "Giza"
+    ],
+    [
+     "neighbo(?:u)?rhood|district|mall|mehwar|plaza|26th july corridor|dolphin land|midi point|silver mall|cityscape|staff medical|cinemas area|medical center \\(1\\)|magda|majida|twin towers|claude 9|city plaza",
+     "6th of October",
+     "Giza"
+    ],
+    [
+     "zomor canal|zuma canal|gesr el kanisa",
+     "Faisal",
+     "Giza"
+    ],
+    [
+     "\\bel wahda\\b|wehda|alwehda",
+     "Imbaba & El Warraq",
+     "Giza"
+    ],
+    [
+     "gomhouria|gomhoria|okasha|safa hospital|asema",
+     "Giza Central",
+     "Giza"
+    ]
+   ],
+   "district_gov": {
+    "Zahraa El Maadi": "Cairo",
+    "Maadi": "Cairo",
+    "New Cairo": "Cairo",
+    "Rehab City": "Cairo",
+    "Madinaty": "Cairo",
+    "El Shorouk": "Cairo",
+    "Badr City": "Cairo",
+    "El Obour": "Cairo",
+    "Future City": "Cairo",
+    "10th of Ramadan": "Cairo",
+    "New Administrative Capital": "Cairo",
+    "Heliopolis": "Cairo",
+    "El Nozha & Sheraton": "Cairo",
+    "Nasr City": "Cairo",
+    "Gesr El Suez & Alf Maskan": "Cairo",
+    "Mokattam": "Cairo",
+    "Helwan": "Cairo",
+    "Ain Shams": "Cairo",
+    "El Matareya": "Cairo",
+    "El Marg": "Cairo",
+    "El Salam City": "Cairo",
+    "Shubra El Kheima": "Cairo",
+    "Shoubra": "Cairo",
+    "El Zeitoun": "Cairo",
+    "Hadayek El Kobba & Abbasiya": "Cairo",
+    "Downtown & Abdeen": "Cairo",
+    "Garden City & Kasr El Ainy": "Cairo",
+    "Sayeda Zeinab & Islamic Cairo": "Cairo",
+    "Old Cairo & Manial": "Cairo",
+    "Dar El Salam & Basateen": "Cairo",
+    "Zamalek": "Cairo",
+    "Bulaq Abu El Ela": "Cairo",
+    "Bulaq El Dakrour": "Giza",
+    "Mohandessin": "Giza",
+    "Ard El Lewa": "Giza",
+    "Dokki": "Giza",
+    "Agouza": "Giza",
+    "Imbaba & El Warraq": "Giza",
+    "Faisal": "Giza",
+    "Hadayek El Ahram": "Giza",
+    "Haram & Pyramids": "Giza",
+    "El Omraniya": "Giza",
+    "El Moneeb": "Giza",
+    "New Giza": "Giza",
+    "Sheikh Zayed": "Giza",
+    "6th of October": "Giza",
+    "Kerdasa & Osim": "Giza",
+    "South Giza (Ayyat, Badrashein, Hawamdiya)": "Giza",
+    "Giza Central": "Giza"
+   }
+  }
+ ],
+ "aliases": {
+  "Heliopolis": "masr el gedida misr el gedida korba roxy",
+  "New Cairo": "tagamoa tagamo3 tagamo fifth settlement 5th settlement el tagamoa el khames first settlement katameya 90 street",
+  "6th of October": "october 6 october madinet 6 october sheikh zayed nearby",
+  "Sheikh Zayed": "zayed el sheikh zayed beverly hills arkan",
+  "Nasr City": "madinet nasr city stars abbas el akkad makram ebeid",
+  "Downtown & Abdeen": "wust el balad west el balad downtown tahrir",
+  "Haram & Pyramids": "pyramids haram ahram",
+  "Hadayek El Ahram": "pyramids gardens hadayek ahram",
+  "Mohandessin": "mohandeseen mohandseen",
+  "El Nozha & Sheraton": "sheraton nozha almaza heliopolis",
+  "Zahraa El Maadi": "maadi",
+  "Old Cairo & Manial": "misr el qadima masr el adima manial roda",
+  "Shoubra": "shubra",
+  "Shubra El Kheima": "shoubra el kheima qalyubia",
+  "Hadayek El Kobba & Abbasiya": "abbassia kobba qubba",
+  "Gesr El Suez & Alf Maskan": "gisr el suez suez bridge",
+  "Imbaba & El Warraq": "embaba warraq kit kat",
+  "Agouza": "agoza kit kat",
+  "Dokki": "doqqi",
+  "Rehab City": "el rehab",
+  "Madinaty": "madinty",
+  "New Administrative Capital": "new capital"
+ }
+}

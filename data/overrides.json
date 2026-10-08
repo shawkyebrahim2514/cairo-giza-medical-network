@@ -1,0 +1,3 @@
+{
+ "_doc": "Manual corrections applied on top of the automatic enrichment, keyed by facility id. Allowed fields: d (district), r (governorate), b (brand, \"\" = independent), n (name), a (address), tel (phone text), t (type slug). Example: \"31772f4b-c0e2-4142-a00e-3fb442bf9f69\": {\"d\": \"New Cairo\"}"
+}

@@ -1,0 +1,21 @@
+# build output (built by GitHub Actions; the single file is attached to Releases)
+dist/
+
+# raw pages saved from the insurer's website – kept local only
+data/raw/*
+!data/raw/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# test artefacts
+tests/output/
+shots/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
