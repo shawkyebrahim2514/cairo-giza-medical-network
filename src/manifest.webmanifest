@@ -1,7 +1,7 @@
 {
   "name": "__AREA__ Medical Network",
   "short_name": "Medical Network",
-  "description": "Unofficial, offline-capable directory of insurance-network medical facilities in __AREA__, Egypt.",
+  "description": "Unofficial, offline-capable guide to the Bupa Global network medical facilities in __AREA__, Egypt.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

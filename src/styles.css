@@ -319,12 +319,13 @@ svg.fill{fill:currentColor;stroke:none}
   .sidebar.open{transform:none;visibility:visible}
   .backdrop.show{display:block;position:fixed;inset:0;background:rgba(0,20,40,.5);z-index:45}
   .only-mobile{display:inline-flex}
-  .brand h1 small,.hide-sm{display:none}
+  .hide-sm{display:none}
 }
 @media (max-width:720px){
   .hdr-row{flex-wrap:wrap}
   .search{order:3;flex-basis:100%;max-width:none}
   .brand h1{font-size:.95rem;white-space:normal}
+  .brand h1 small{font-size:.7rem;margin-top:.1rem}
   .brand{flex:1}
   .tools{margin-left:auto}
   .search .kbd{display:none}

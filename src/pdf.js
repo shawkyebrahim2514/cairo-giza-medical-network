@@ -91,7 +91,7 @@ const PDFX = (() => {
       opacity(0.07); fill(C.white); doc.circle(W - 28, 18, 58, "F"); doc.circle(W - 4, bandH - 2, 30, "F"); doc.circle(W * 0.55, bandH + 6, 22, "F"); opacity(1);
       fill(C.cyan); doc.rect(0, bandH, W, 1.6, "F");
       logo(M + 9, 22, 9);
-      font("bold", 8.5); color(C.light); doc.text("UNOFFICIAL DIRECTORY  ·  MEDICAL NETWORK  ·  EGYPT", M + 23, 22.3, {baseline:"middle", charSpace:0.4});
+      font("bold", 8.5); color(C.light); doc.text("UNOFFICIAL GUIDE  ·  BUPA GLOBAL NETWORK  ·  EGYPT", M + 23, 22.3, {baseline:"middle", charSpace:0.4});
       font("bold", 36); color(C.white); txt(clean(AREA), M, bandH - 60);
       font("normal", 21); color([222,238,250]); txt("Medical Network Directory", M, bandH - 44);
       font("bold", 9.5); const sl = clean(scopeText); const slFit = doc.splitTextToSize(sl, CW - 14)[0];
@@ -347,7 +347,7 @@ const PDFX = (() => {
       doc.textWithLink("Shawky Ebrahim", fx, H - 6, {url:GH, baseline:"middle"}); fx += doc.getTextWidth("Shawky Ebrahim");
       font("normal", 7); color(C.muted); doc.text("  ·  Generated with ", fx, H - 6, {baseline:"middle"}); fx += doc.getTextWidth("  ·  Generated with ");
       font("bold", 7); color(C.brand); doc.textWithLink("GitHub Copilot CLI", fx, H - 6, {url:CLI, baseline:"middle"});
-      font("normal", 7); color(C.muted); doc.text("Unofficial directory · data snapshot __SNAPSHOT__", W / 2 + 18, H - 6, {baseline:"middle", align:"center"});
+      font("normal", 7); color(C.muted); doc.text("Unofficial guide to the Bupa Global network · data snapshot __SNAPSHOT__", W / 2 + 18, H - 6, {baseline:"middle", align:"center"});
       font("bold", 7.5); color(C.slate); doc.text(`Page ${p} of ${N}`, W - M, H - 6, {align:"right", baseline:"middle"});
     }
     void contentStart;

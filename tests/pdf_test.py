@@ -25,7 +25,8 @@ def inspect(path, name):
         return
     d = pymupdf.open(path)
     text = d[0].get_text() + (d[1].get_text() if d.page_count > 1 else "")
-    check("Bupa" not in d[0].get_text().replace("endorsed by Bupa", ""), f"{name}: no Bupa branding on cover")
+    cover = d[0].get_text()
+    check("BUPA GLOBAL NETWORK" in cover and "UNOFFICIAL" in cover, f"{name}: cover names the network and says unofficial")
     check("Unofficial" in text or "UNOFFICIAL" in text, f"{name}: unofficial notice in PDF")
     links = sum(len(p.get_links()) for p in d)
     check(links > 0, f"{name}: has clickable links ({links})")

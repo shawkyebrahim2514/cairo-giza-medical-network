@@ -1,7 +1,7 @@
 # Cairo & Giza Medical Network
 
 An **unofficial**, fast, offline-friendly directory of the hospitals, clinics, labs, pharmacies and other medical
-facilities in **Cairo & Giza** that appear on an international health insurer's public facility list – so you can
+facilities in **Cairo & Giza** that are part of the **Bupa Global** network (from its public facility list) – so you can
 search, filter and locate them easily.
 
 **🌐 Live site:** https://shawkyebrahim2514.github.io/cairo-giza-medical-network/
