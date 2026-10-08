@@ -346,9 +346,14 @@ const PDFX = (() => {
       let fx = M + doc.getTextWidth("Made by "); font("bold", 7); color(C.brand);
       doc.textWithLink("Shawky Ebrahim", fx, H - 6, {url:GH, baseline:"middle"}); fx += doc.getTextWidth("Shawky Ebrahim");
       font("normal", 7); color(C.muted); doc.text("  ·  Generated with ", fx, H - 6, {baseline:"middle"}); fx += doc.getTextWidth("  ·  Generated with ");
-      font("bold", 7); color(C.brand); doc.textWithLink("GitHub Copilot CLI", fx, H - 6, {url:CLI, baseline:"middle"});
-      font("normal", 7); color(C.muted); doc.text("Unofficial guide to the Bupa Global network · data snapshot __SNAPSHOT__", W / 2 + 18, H - 6, {baseline:"middle", align:"center"});
-      font("bold", 7.5); color(C.slate); doc.text(`Page ${p} of ${N}`, W - M, H - 6, {align:"right", baseline:"middle"});
+      font("bold", 7); color(C.brand); doc.textWithLink("GitHub Copilot CLI", fx, H - 6, {url:CLI, baseline:"middle"}); fx += doc.getTextWidth("GitHub Copilot CLI");
+      font("bold", 7.5); const pgTxt = `Page ${p} of ${N}`, pgX = W - M - doc.getTextWidth(pgTxt);
+      font("normal", 7); color(C.muted);
+      const room = pgX - fx - 12;
+      const mid = ["Unofficial guide to the Bupa Global network · data snapshot __SNAPSHOT__", "Unofficial guide · Bupa Global network · __SNAPSHOT__", "Unofficial · __SNAPSHOT__"]
+        .find(t => doc.getTextWidth(t) <= room);
+      if (mid) doc.text(mid, fx + 6 + room / 2, H - 6, {baseline:"middle", align:"center"});
+      font("bold", 7.5); color(C.slate); doc.text(pgTxt, W - M, H - 6, {align:"right", baseline:"middle"});
     }
     void contentStart;
     return { doc, pages:N, total };
