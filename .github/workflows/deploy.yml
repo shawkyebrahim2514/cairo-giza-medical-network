@@ -22,8 +22,8 @@ jobs:
     outputs:
       snapshot: ${{ steps.meta.outputs.snapshot }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -42,10 +42,10 @@ jobs:
       - id: meta
         run: echo "snapshot=$(python -c "import json;print(json.load(open('data/meta.json'))['snapshot'])")" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist/site
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: single-file
           path: dist/cairo-giza-medical-network.html
@@ -62,7 +62,7 @@ jobs:
       url: ${{ steps.pages.outputs.page_url }}
     steps:
       - id: pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   release:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
@@ -71,10 +71,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: single-file
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: data-${{ needs.build.outputs.snapshot }}
           name: Data snapshot ${{ needs.build.outputs.snapshot }}
