@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       snapshot: ${{ steps.meta.outputs.snapshot }}
+      checked: ${{ steps.meta.outputs.checked }}
+      built: ${{ steps.meta.outputs.built }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -40,7 +42,15 @@ jobs:
           python tests/pdf_test.py
 
       - id: meta
-        run: echo "snapshot=$(python -c "import json;print(json.load(open('data/meta.json'))['snapshot'])")" >> "$GITHUB_OUTPUT"
+        run: |
+          python - >> "$GITHUB_OUTPUT" <<'EOF'
+          import json
+          m = json.load(open("data/meta.json", encoding="utf-8-sig"))
+          print(f"snapshot={m['snapshot']}")
+          print(f"checked={max(m['snapshot'], m.get('checked', ''))}")
+          import datetime
+          print("built=" + datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"))
+          EOF
 
       - uses: actions/upload-pages-artifact@v5
         with:
@@ -79,8 +89,16 @@ jobs:
           tag_name: data-${{ needs.build.outputs.snapshot }}
           name: Data snapshot ${{ needs.build.outputs.snapshot }}
           body: |
-            Offline single-file directory (data snapshot ${{ needs.build.outputs.snapshot }}).
+            Offline single-file directory.
+
+            | | |
+            |---|---|
+            | Data as of | **${{ needs.build.outputs.snapshot }}** (the last time the facility list changed) |
+            | Last checked | **${{ needs.build.outputs.checked }}** (the last time it was confirmed as current) |
+            | File built | ${{ needs.build.outputs.built }} from commit ${{ github.sha }} |
+
             Download **cairo-giza-medical-network.html** and open it in any browser – no internet or install needed.
+            The file is rebuilt (and replaced here) whenever the site is redeployed, including after each weekly check.
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for what changed.
           files: cairo-giza-medical-network.html
           make_latest: true

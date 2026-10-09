@@ -26,9 +26,14 @@ The facility list for **all of Egypt**, written by `update.py` – **don't edit 
 
 ### `data/meta.json`
 ```json
-{ "snapshot": "2026-10-08", "source": "live facilities feed", "count": 1685 }
+{ "snapshot": "2026-10-08", "checked": "2026-10-09", "source": "live facilities feed", "count": 1685 }
 ```
-`snapshot` is shown in the page, PDF and release name. Written by `update.py`.
+| Field | Meaning | Shown in |
+|---|---|---|
+| `snapshot` | **Data as of** – the last date the facility list *changed* | page, PDF, release name/tag, README badge |
+| `checked` | **Last checked** – the last date the list was compared with the source and confirmed (set on every run, changed or not) | page, PDF cover note, release notes, README badge |
+
+Both are written by `update.py`; `checked` is updated weekly by the *Check for data updates* workflow.
 
 ### `data/overrides.json`
 Your manual corrections, applied on top of the automatic detection at build time. **Never overwritten by updates.**

@@ -1,0 +1,55 @@
+name: Report wrong facility info
+description: A phone number, address, district, name or type is wrong, or a facility has closed or moved.
+title: "Wrong info: "
+labels: [wrong-info]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the directory accurate. This is an **unofficial** project – for questions about
+        your cover, contact your insurer. Please don't include personal or medical information.
+  - type: input
+    id: facility
+    attributes:
+      label: Facility name
+      description: As shown in the directory.
+    validations:
+      required: true
+  - type: input
+    id: district
+    attributes:
+      label: District / area shown
+      placeholder: e.g. Nasr City
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What is wrong?
+      multiple: true
+      options:
+        - Phone number
+        - Address
+        - District / area
+        - Name
+        - Facility type
+        - Closed or moved
+        - Duplicate entry
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: Correct information
+      description: What it should say.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: How do you know?
+      description: e.g. called the facility, official website, visited in person.
+  - type: markdown
+    attributes:
+      value: |
+        For maintainers: fix it in `data/overrides.json` so the fix survives data updates – see
+        [Fix one facility](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/blob/main/docs/RECIPES.md#fix-one-facility).

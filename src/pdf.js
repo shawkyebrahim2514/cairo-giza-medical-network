@@ -124,7 +124,7 @@ const PDFX = (() => {
       const about = [
         `Grouped by ${state.show === "recent" && o.scope === "cur" ? "most recent use" : ({district:"district", type:"facility type", brand:"brand / chain", gov:"governorate", az:"first letter", none:"nothing (single list)"}[state.group])}, ${o.layout === "table" ? "table" : "card"} layout${o.extras ? ", including your private notes and tags" : ""}.`,
         "Facility names link to Google Maps; phone numbers are tappable on phones and tablets.",
-        `Unofficial - not affiliated with or endorsed by Bupa. Data: public facility list on bupaglobal.com, snapshot __SNAPSHOT__. Districts and brands are inferred automatically - always confirm your cover with your insurer before treatment.`
+        `Unofficial - not affiliated with or endorsed by Bupa. Data: public facility list on bupaglobal.com, data as of __SNAPSHOT__ (last checked __CHECKED__). Districts and brands are inferred automatically - always confirm your cover with your insurer before treatment.`
       ];
       about.forEach(a => { const L = doc.splitTextToSize(a, CW - 6); fill(C.brand); doc.circle(M + 1.2, y + 1.9, 0.8, "F"); txt(L, M + 5, y); y += L.length * 4.1 + 1.6; });
       // credits
@@ -350,7 +350,7 @@ const PDFX = (() => {
       font("bold", 7.5); const pgTxt = `Page ${p} of ${N}`, pgX = W - M - doc.getTextWidth(pgTxt);
       font("normal", 7); color(C.muted);
       const room = pgX - fx - 12;
-      const mid = ["Unofficial guide to the Bupa Global network · data snapshot __SNAPSHOT__", "Unofficial guide · Bupa Global network · __SNAPSHOT__", "Unofficial · __SNAPSHOT__"]
+      const mid = ["Unofficial guide to the Bupa Global network · data as of __SNAPSHOT__", "Unofficial guide · Bupa Global network · __SNAPSHOT__", "Unofficial · __SNAPSHOT__"]
         .find(t => doc.getTextWidth(t) <= room);
       if (mid) doc.text(mid, fx + 6 + room / 2, H - 6, {baseline:"middle", align:"center"});
       font("bold", 7.5); color(C.slate); doc.text(pgTxt, W - M, H - 6, {align:"right", baseline:"middle"});

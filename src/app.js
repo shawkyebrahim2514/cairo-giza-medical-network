@@ -705,7 +705,7 @@ readURL();
 $("#q").value = state.q; $("#clearQ").classList.toggle("show", !!state.q);
 $("#groupBy").value = state.group; $("#sortBy").value = state.sort;
 applyFont(); setHeaderH();
-$("#footStats").innerHTML = `<strong>${DATA.length.toLocaleString()}</strong> facilities · <strong>${ALL_DISTRICTS.filter(d => !d.startsWith("Other")).length}</strong> districts · <strong>${TYPE_ORDER.length}</strong> facility types · ${esc(AREA)} · snapshot __SNAPSHOT__`;
+$("#footStats").innerHTML = `<strong>${DATA.length.toLocaleString()}</strong> facilities · <strong>${ALL_DISTRICTS.filter(d => !d.startsWith("Other")).length}</strong> districts · <strong>${TYPE_ORDER.length}</strong> facility types · ${esc(AREA)} · data as of __SNAPSHOT__ · last checked __CHECKED__`;
 
 /* unofficial notice (dismissible, shown again when the data snapshot changes) */
 if (LS.get("noticeSeen", "") !== "__SNAPSHOT__") $("#notice").hidden = false;

@@ -8,7 +8,8 @@
 Search, filter, map and call 1,100+ hospitals, clinics, labs, pharmacies and more – in one fast page.
 
 [![Build & deploy](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/actions/workflows/deploy.yml/badge.svg)](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/actions/workflows/deploy.yml)
-[![Data snapshot](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fshawkyebrahim2514%2Fcairo-giza-medical-network%2Fmain%2Fdata%2Fmeta.json&query=%24.snapshot&label=data%20snapshot&color=0F766E)](CHANGELOG.md)
+[![Data as of](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fshawkyebrahim2514%2Fcairo-giza-medical-network%2Fmain%2Fdata%2Fmeta.json&query=%24.snapshot&label=data%20as%20of&color=0F766E)](CHANGELOG.md)
+[![Last checked](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fshawkyebrahim2514%2Fcairo-giza-medical-network%2Fmain%2Fdata%2Fmeta.json&query=%24.checked&label=last%20checked&color=0F766E)](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/actions/workflows/update-data.yml)
 [![Latest release](https://img.shields.io/github/v/release/shawkyebrahim2514/cairo-giza-medical-network?label=offline%20file&color=0F766E)](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/releases/latest)
 [![Licence: MIT (code)](https://img.shields.io/badge/licence-MIT%20(code)-334155)](LICENSE)
 
@@ -132,8 +133,14 @@ Every option, input, output and exit code is documented in **[docs/SCRIPTS.md](d
 
 | Workflow | When | What |
 |---|---|---|
-| **Check for data updates** ([`update-data.yml`](.github/workflows/update-data.yml)) | Mondays 06:00 UTC, or manually | Runs `update.py`. If the list changed, opens/updates a pull request **`data-update`** whose description is the change report (added / removed / changed, Cairo & Giza first). |
+| **Check for data updates** ([`update-data.yml`](.github/workflows/update-data.yml)) | Mondays 06:00 UTC, or manually | Runs `update.py`. If the list changed, opens/updates a pull request **`data-update`** whose description is the change report (added / removed / changed, Cairo & Giza first). If nothing changed, commits the new **last checked** date to `main` and redeploys. |
 | **Build & deploy** ([`deploy.yml`](.github/workflows/deploy.yml)) | Every push to `main` touching the app/data, PRs, or manually | Build → UI & PDF tests → publish to **GitHub Pages** → create/update the release **`data-YYYY-MM-DD`** with the single offline file attached. |
+| **Dependabot** ([`dependabot.yml`](.github/dependabot.yml)) | Monthly | One pull request that bumps the GitHub Actions versions; merge when the checks pass. |
+
+**Dates and releases:** *data as of* (`snapshot` in `data/meta.json`) is the last day the facility list **changed** –
+it names the release tag `data-YYYY-MM-DD`, so a new release appears only when the data changes. *Last checked* is the
+last day the list was **confirmed** as current. Every redeploy rebuilds the offline file and replaces it in the
+existing release (the notes show the data date, last checked date, build time and commit).
 
 **When a data-update PR arrives:** read the report, spot-check anything odd (e.g. a new facility in *Other Cairo* →
 teach its district in `config/districts.json`, see [RECIPES](docs/RECIPES.md#a-facility-is-in-other-cairo--wrong-district)),
@@ -165,7 +172,7 @@ merging does, and a failing build never gets deployed.
 │   └── icons/                 app icons
 ├── data/
 │   ├── facilities.json        the facility list – all of Egypt (updated by update.py)
-│   ├── meta.json              snapshot date, source, count
+│   ├── meta.json              data date ("snapshot"), last-checked date, source, count
 │   ├── overrides.json         your manual corrections (never overwritten)
 │   └── raw/                   saved HTML pages – local only, git-ignored
 ├── config/
@@ -177,7 +184,7 @@ merging does, and a failing build never gets deployed.
 ├── tests/                   Playwright UI + PDF tests
 ├── vendor/                  jsPDF + AutoTable (MIT), inlined into the build
 ├── docs/                    SCRIPTS.md · DATA.md · RECIPES.md · screenshots/
-├── .github/workflows/       deploy.yml · update-data.yml
+├── .github/                 workflows/ (deploy · update-data) · dependabot.yml · ISSUE_TEMPLATE/ (wrong-info form)
 ├── CHANGELOG.md             data changes over time (written by update.py)
 └── dist/                    build output – git-ignored
 ```
@@ -201,7 +208,8 @@ merging does, and a failing build never gets deployed.
 - [ ] **Map view** – facilities as pins on a map, filtered with the current search (needs internet for map tiles; addresses must be geocoded once and cached)
 - [ ] *Maybe:* more regions as separate sites (Alexandria, …) · Arabic interface · "near me" sorting
 
-Ideas and corrections are welcome in [Issues](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/issues).
+Spotted a wrong phone number, address or district? **[Report wrong info](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/issues/new?template=wrong-info.yml)**
+(also linked from the page footer). Other ideas are welcome in [Issues](https://github.com/shawkyebrahim2514/cairo-giza-medical-network/issues).
 
 ## Credits & licence
 

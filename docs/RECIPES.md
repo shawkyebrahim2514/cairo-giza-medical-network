@@ -150,7 +150,7 @@ Run `python tests/ui_test.py` after bigger changes, and `python scripts/screensh
 ## Make a release by hand
 
 Actions → **Build & deploy** → **Run workflow** on `main`. It rebuilds, publishes and updates the release for the
-current snapshot date. Or locally: `python scripts/build.py`, then create a release on GitHub and attach
+current data date. Or locally: `python scripts/build.py`, then create a release on GitHub and attach
 `dist/cairo-giza-medical-network.html`.
 
 ## Upgrade the PDF libraries
@@ -187,7 +187,8 @@ If the feed's format changed, `source.py` → `fetch_api()` is the only place to
 ## The site still shows old data
 
 The website keeps an offline copy. When online it always tries the network first, so a normal **reload** shows
-the new version. An installed app may need to be closed and reopened. Check the snapshot date in the footer.
+the new version. An installed app may need to be closed and reopened. Check the *data as of* / *last checked*
+dates in the footer.
 The single file never updates itself – download the new one from the latest release.
 
 ## My favourites / notes are missing

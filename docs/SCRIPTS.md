@@ -27,7 +27,7 @@ python tests/pdf_test.py
 
 Fetches the current facility list, compares it with `data/facilities.json`, prints a Markdown change report and,
 if something changed, saves the new data, updates `data/meta.json`, adds the report to the top of `CHANGELOG.md`
-and rebuilds.
+and rebuilds. If nothing changed, it only records today as the `checked` date in `data/meta.json`.
 
 ```bash
 python scripts/update.py                         # live feed → compare → save → rebuild
@@ -44,7 +44,7 @@ python scripts/update.py --force                 # save + rebuild even if nothin
 | `--dry-run` | Show what would change; don't touch any file. |
 | `--no-build` | Skip the rebuild (the GitHub Action uses this; the deploy workflow builds after merge). |
 | `--report FILE` | Write the change report to `FILE`. Reports over 60,000 characters are truncated (GitHub's PR body limit); the full one is still in `CHANGELOG.md`. |
-| `--force` | Write files and rebuild even with no changes (e.g. to refresh the snapshot date). |
+| `--force` | Write files and rebuild even with no changes (e.g. to move the data date to today). |
 
 **Compared fields:** name, type, governorate, area, address, phone – matched by the facility's unique id.
 A facility that is renamed keeps its id, so it shows as *Changed*, not *Removed + Added*.
@@ -53,13 +53,14 @@ A facility that is renamed keeps its id, so it shows as *Changed*, not *Removed 
 category. Cairo & Giza rows are listed first. *Changed* rows show ~~old~~ → new per field.
 
 **Writes:** `data/facilities.json` (sorted by governorate, type, name; one record per line), `data/meta.json`
-(`snapshot` = today, `source`, `count`), `CHANGELOG.md` (newest first), `dist/…` unless `--no-build`.
+(`snapshot` and `checked` = today, `source`, `count`), `CHANGELOG.md` (newest first), `dist/…` unless `--no-build`.
+With no changes (and no `--dry-run`) it writes only `checked` = today in `data/meta.json`.
 When running inside GitHub Actions it also writes `summary=` and `date=` to `$GITHUB_OUTPUT` for the PR title.
 
 | Exit code | Meaning |
 |---|---|
 | `0` | Changes found and written (or `--dry-run` with changes) |
-| `3` | No changes – nothing written |
+| `3` | No changes – only the `checked` date is written |
 | `1` | Could not read the source (network blocked, format changed, empty page) |
 
 ---
@@ -90,7 +91,9 @@ Non-default sites go to `dist/<slug>-medical-network.html` and `dist/site-<slug>
    | Placeholder | Becomes |
    |---|---|
    | `__AREA__` | site title, e.g. *Cairo & Giza* (HTML- or JS-escaped as needed) |
-   | `__SNAPSHOT__` | data date, e.g. *08 Oct 2026* |
+   | `__SNAPSHOT__` | data date (last time the list changed), e.g. *08 Oct 2026* |
+   | `__CHECKED__` | last date the list was confirmed as current (never earlier than the data date) |
+   | `__BUILT__` | build date |
    | `__SLUG__` | site slug, used in file names of exports |
    | `__REPO__` | GitHub repo URL |
    | `__TYPES__` | facility types from `config/types.json` (only those present) |
@@ -207,7 +210,9 @@ Both print `ok` / `FAIL` per check and exit `1` if anything failed.
 ### `.github/workflows/update-data.yml` – Check for data updates
 - **Runs:** Mondays 06:00 UTC, or *Run workflow* by hand.
 - **Does:** `python scripts/update.py --no-build --report $RUNNER_TEMP/report.md`
-  - exit `3` → nothing to do;
+  - exit `3` → if `data/meta.json` got a new `checked` date, commit it to `main` (*Data checked YYYY-MM-DD: no
+    changes*) and start *Build & deploy* with `gh workflow run` (a push made with `GITHUB_TOKEN` doesn't trigger
+    other workflows by itself). The site, the release file and the README badge then show the new *last checked* date;
   - exit `0` → [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request) opens or updates
     the PR from branch `data-update`, title *Data update YYYY-MM-DD: N added, N removed, N changed*, body = report,
     label `data-update`;
@@ -219,5 +224,15 @@ Both print `ok` / `FAIL` per check and exit `1` if anything failed.
 - **Jobs:**
   1. `build` – build, install Playwright, run both tests, upload the website and the single file as artifacts.
   2. `deploy` (main only) – publish `dist/site` to GitHub Pages.
-  3. `release` (main only) – create/update release `data-<snapshot date>` with `cairo-giza-medical-network.html`.
+  3. `release` (main only) – create release `data-<snapshot date>`, or update it if that tag already exists:
+     the notes (data date, last checked, build time, commit) and the attached `cairo-giza-medical-network.html` are
+     replaced, and the tag stays on the commit where it was first created. A new tag is made only when the data changes.
 - **Needs:** Settings → Pages → Source: *GitHub Actions*.
+
+### `.github/dependabot.yml` – Keep the Actions up to date
+- **Runs:** monthly. Opens one grouped PR (label `dependencies`) bumping the actions used by the workflows; the
+  *Build & deploy* checks run on it – merge when green.
+
+### `.github/ISSUE_TEMPLATE/wrong-info.yml` – Report wrong facility info
+- An issue form (label `wrong-info`) linked from the page footer. Fix confirmed reports in `data/overrides.json`
+  ([recipe](RECIPES.md#fix-one-facility)).

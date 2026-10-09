@@ -1,0 +1,14 @@
+# Opens one monthly pull request that bumps the GitHub Actions used in .github/workflows/.
+# The "Build & deploy" checks run on it; merge when they pass.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci
+    labels: [dependencies]

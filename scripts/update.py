@@ -6,7 +6,8 @@
   python scripts/update.py --no-build           # update data + CHANGELOG but don't rebuild dist/
 
 Writes data/facilities.json, data/meta.json, prepends CHANGELOG.md, and (with --report FILE) a Markdown
-report used as the pull-request body by the weekly GitHub Action.
+report used as the pull-request body by the weekly GitHub Action. With no changes, only the "checked"
+date in data/meta.json is updated (not with --dry-run).
 Exit code: 0 = changes written, 3 = no changes, 1 = error.
 """
 import argparse
@@ -104,6 +105,12 @@ def main():
 
     if not (added or removed or changed) and not a.force:
         print("\nNo changes.")
+        if not a.dry_run:  # remember that the data was confirmed as current today
+            meta = load_json(META, {}) or {}
+            if meta.get("checked") != today:
+                meta["checked"] = today
+                save_json(META, meta)
+                print(f"Marked as checked on {today} in {META}")
         return 3
     if a.dry_run:
         return 0
@@ -115,7 +122,7 @@ def main():
 
     save_json(FACILITIES, new, compact_rows=True)
     meta = load_json(META, {}) or {}
-    meta.update({"snapshot": today, "source": source, "count": len(new)})
+    meta.update({"snapshot": today, "checked": today, "source": source, "count": len(new)})
     save_json(META, meta)
     if added or removed or changed:
         prepend_changelog(rep)

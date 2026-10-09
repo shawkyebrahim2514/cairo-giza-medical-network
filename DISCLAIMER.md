@@ -9,7 +9,8 @@ connected to Bupa, Bupa Global or any other insurer or healthcare provider. All 
   by the insurer at [bupaglobal.com](https://www.bupaglobal.com/). This project only reorganises that public
   information to make it easier to search; districts, brands and phone links are **inferred automatically** and
   may be wrong.
-- The data is a **snapshot** (see the date on the site / `data/meta.json`) and may be **out of date**.
+- The data was last changed on the *data as of* date and last confirmed on the *last checked* date (see the site /
+  `data/meta.json`) and may be **out of date**.
   Facilities can join or leave a network at any time.
 - Being listed here does **not** mean that a facility is covered by your plan, that direct billing is available, or
   that the facility will accept you. **Always confirm cover with your insurer before treatment.**

@@ -41,11 +41,21 @@ def subst(text, mapping):
     return text
 
 
-def snapshot_label(meta):
+def date_label(value):
     try:
-        return datetime.date.fromisoformat(meta["snapshot"]).strftime("%d %b %Y")
+        return datetime.date.fromisoformat(value).strftime("%d %b %Y")
     except Exception:
         return "unknown date"
+
+
+def snapshot_label(meta):
+    return date_label(meta.get("snapshot"))
+
+
+def checked_label(meta):
+    """Last date the source was compared with our data; never earlier than the data date."""
+    snap, checked = meta.get("snapshot") or "", meta.get("checked") or ""
+    return date_label(max(snap, checked))
 
 
 def build(site_name=None, quiet=False):
@@ -70,7 +80,8 @@ def build(site_name=None, quiet=False):
     types = {k: v for k, v in types.items() if k in used}
 
     area, slug, snap = site["title"], site["slug"], snapshot_label(meta)
-    common = {"__SNAPSHOT__": snap, "__REPO__": REPO, "__SLUG__": slug}
+    common = {"__SNAPSHOT__": snap, "__CHECKED__": checked_label(meta),
+              "__BUILT__": date_label(datetime.date.today().isoformat()), "__REPO__": REPO, "__SLUG__": slug}
     html_map = dict(common, **{"__AREA__": html.escape(area)})
     js_map = dict(common, **{"__AREA__": js_str(area)})
 
@@ -95,7 +106,7 @@ def build(site_name=None, quiet=False):
     data = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
     # data + library last, so their contents are never scanned for placeholders
     page = page.replace("__DATA__", data, 1).replace("__PDFLIB__", lib, 1)
-    leftover = [p for p in ("__AREA__", "__SNAPSHOT__", "__REPO__", "__SLUG__", "__TYPES__", "__ALIASES__", "__FAVICON__") if p in page]
+    leftover = [p for p in ("__AREA__", "__SNAPSHOT__", "__CHECKED__", "__BUILT__", "__REPO__", "__SLUG__", "__TYPES__", "__ALIASES__", "__FAVICON__") if p in page]
     if leftover:
         raise SystemExit(f"Unreplaced placeholders: {leftover}")
 
@@ -120,7 +131,7 @@ def build(site_name=None, quiet=False):
 
     if not quiet:
         dists = len({r["d"] for r in rows})
-        print(f"Built '{site_name}': {len(rows):,} facilities, {dists} districts, snapshot {snap}")
+        print(f"Built '{site_name}': {len(rows):,} facilities, {dists} districts, data as of {snap} (checked {checked_label(meta)})")
         print(f"  {single}  ({os.path.getsize(single) / 1024:,.0f} KB)")
         print(f"  {site_dir}{os.sep}")
     return single, site_dir
